@@ -19,4 +19,4 @@ Bear, Cowboy, Ninja is a simple and fun game implemented using Python and the Tk
 ## Installation
 1. **Clone the repository**:
    ```sh
-   git clone[(https://github.com/jeffhb60/BearCowboyNinja.git)]
+   git clone https://github.com/jeffhb60/BearCowboyNinja.git
