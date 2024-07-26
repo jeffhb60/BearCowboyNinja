@@ -19,15 +19,11 @@ Bear, Cowboy, Ninja is a simple and fun game implemented using Python and the Tk
 
 ## Installation
 1. **Clone the repository**:
-   \`\`\`sh
    git clone https://github.com/jeffhb60/BearCowboyNinja.git
    cd BearCowboyNinja
-   \`\`\`
 
 2. **Install the required Python packages**:
-   \`\`\`sh
    pip install pillow
-   \`\`\`
 
 3. **Ensure you have the following images in the \`images\` folder**:
    - \`background.png\` (Background wallpaper)
@@ -37,9 +33,7 @@ Bear, Cowboy, Ninja is a simple and fun game implemented using Python and the Tk
 
 ## Usage
 1. **Run the game**:
-   \`\`\`sh
    python main.py
-   \`\`\`
 
 2. **Play the game**:
    - Select one of the characters by clicking on the corresponding button.
@@ -56,9 +50,9 @@ Bear, Cowboy, Ninja is a simple and fun game implemented using Python and the Tk
 - If both characters are the same, it is a tie.
 
 ## Code Structure
-- \`main.py\`: The main game launch file
-- \`bear_cowboy_ninja.py\`: The BearCowboyNinja Class File, and game 
-- \`images/\`: Folder containing the images used in the game.
+- main.py: The main game launch file
+- bear_cowboy_ninja.py\`: The BearCowboyNinja Class File, and game 
+- images/: Folder containing the images used in the game.
 
 ## Complexity Analysis
 ### Time Complexity
