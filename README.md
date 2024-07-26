@@ -2,15 +2,15 @@
 # Bear, Cowboy, Ninja Game
 
 ## Description
-Bear, Cowboy, Ninja is a simple and fun game implemented using Python and the Tkinter library. The game allows the user to play against the computer by choosing one of three characters: Bear, Cowboy, or Ninja. The game determines the winner based on predefined outcomes and keeps track of the game statistics.
+Bear, Cowboy, Ninja is an engaging and entertaining game crafted in Python using the Tkinter library. Players compete against the computer by selecting one of three characters: Bear, Cowboy, or Ninja. The game adjudicates the winner based on predefined rules and keeps a record of game statistics.
 
 ## Features
-- User can choose between Bear, Cowboy, and Ninja.
-- Computer randomly selects an opponent character.
-- Game determines the result based on predefined outcomes.
-- Displays the result of each game.
-- Keeps track of user wins, CPU wins, and draws.
-- Displays statistics including win percentages.
+- Players can select from Bear, Cowboy, and Ninja.
+- The computer randomly chooses an opposing character.
+- The game decides the winner according to predefined outcomes.
+- Displays the result of each round.
+- Tracks user wins, CPU wins, and draws.
+- Shows statistics, including win percentages.
 
 ## Requirements
 - Python 3.x
@@ -62,4 +62,4 @@ Bear, Cowboy, Ninja is a simple and fun game implemented using Python and the Tk
 - The program uses a constant amount of space for variables, images, and UI elements, resulting in a space complexity of O(1).
 
 ## Acknowledgements
-- This game was inspired by the classic "Rock, Paper, Scissors" game, with a fun twist!
+- This game was inspired by the classic "Rock, Paper, Scissors" game.
