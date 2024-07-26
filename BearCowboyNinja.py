@@ -1,109 +1,177 @@
-# Filename: BearCowboyNinja.py
-# Author: Jeff Butt
-# Purpose: To simulate a game of Bear Cowboy Ninja.  In this the user will select the 
-#          character.  Then the computer will randomly select the character.  Then a winner
-#          will be determined.  The user will receive a point for a win and the computer will
-#          receive a point for a loss.  The user will determine after each round if they want
-#          to play again.  The game will continue until the user decides to quit.  
-#          When the game ends the user will be provided with the frequency that each 
-#          character was selected.
-#--------------------------------------------------------------------------------------------
+import tkinter as tk
+import random
+from PIL import Image, ImageTk
 
-import random # imports the random library so that the computer can randomly select a character
+class BearCowboyNinjaGame:
+    def __init__(self, root):
+        """
+        Initialize the game window and widgets.
+        :param root: The root window of the Tkinter application.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        self.root = root
+        self.root.title("Bear, Cowboy, Ninja Game")
+        self.root.state('zoomed')  # Make the window fullscreen
+        self.root.resizable(True, True)  # Allow window resizing
 
+        # Load background image
+        self.background_image = ImageTk.PhotoImage(Image.open("images/background.png"))
+        self.background_label = tk.Label(self.root, image=self.background_image)
+        self.background_label.place(relwidth=1, relheight=1)  # Cover the entire window with the background
 
-#--------------------------------------------------------------------------------------------
-# Function: getWinner(userChoice, cpuChoice)
-# Purpose: Determines the winner of the game. 
-# Args: userChoice (str), cpuChoice (str)
-# Returns: The result of the game (str)
-#--------------------------------------------------------------------------------------------
-def getWinner(userChoice, cpuChoice):
-    if userChoice == cpuChoice:
-        return "It's a Draw!  No one wins!"
-    elif (userChoice == 'bear' and cpuChoice == 'ninja') or \
-         (userChoice == 'cowboy' and cpuChoice == 'bear') or \
-         (userChoice == 'ninja' and cpuChoice == 'cowboy'):
-        return "Congtrats.  You win!"
-    else:
-        return "CPU wins!"
+        # Initialize game stats
+        self.user_wins = 0
+        self.cpu_wins = 0
+        self.draws = 0
 
-#-----------------------------------------------------------------------------------
-# Function: play()
-# Purpose: To play the game.  This initiates the game, and manages the game loop
-# Args: None
-# Returns: None
-#-----------------------------------------------------------------------------------
-def play():
-    choices = ['bear', 'cowboy', 'ninja'] #Choices to pick from for game
-    userScore = 0 #User Score, set to 0
-    computerScore = 0 #Computer Score, set to 0
-    drawScore = 0 # The number of Draws set to 0
+        # Create the game widgets
+        self.create_widgets()
 
-    #Dictionaries to keep track of user choice counts and cpu choice counts 
-    userChoiceCounts = {choice: 0 for choice in choices} 
-    cpuChoiceCounts = {choice: 0 for choice in choices}
+    def create_widgets(self):
+        """
+        Create and place all the widgets in the game window.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        # Introductory label
+        self.intro_label = tk.Label(self.root, text="Welcome to Bear, Cowboy, Ninja!", font=("Helvetica", 24, "bold"), bg="#FFFFCC")
+        self.intro_label.pack(pady=20)  # Padding for better spacing
 
-    #Main Game Loop
-    while True:
-        print("\nChoose your move: (bear, cowboy, ninja)")
-        userChoice = input().lower() #User input for their choice.  Moves to lowercase for consistency. 
+        # Instructions label
+        self.instructions = tk.Label(self.root, text="Choose your character:", font=("Helvetica", 18), bg="#FFFFCC")
+        self.instructions.pack()
 
-        #Handles invalid user inputs 
-        if userChoice not in choices:
-            print("Invalid choice. Please choose from bear, cowboy, or ninja.")
-            continue
+        # Frame for the buttons and captions
+        self.button_frame = tk.Frame(self.root, bg="#FFFFCC")
+        self.button_frame.pack(pady=20)
 
-        #Increments the user's choice
-        userChoiceCounts[userChoice] += 1
-      
-        #Randomly selects the computer's choice
-        cpuChoice = random.choice(choices)
+        # Load character images
+        self.bear_image = ImageTk.PhotoImage(Image.open("images/bear.png").resize((150, 150)))
+        self.cowboy_image = ImageTk.PhotoImage(Image.open("images/cowboy.png").resize((150, 150)))
+        self.ninja_image = ImageTk.PhotoImage(Image.open("images/ninja.png").resize((150, 150)))
 
-        #Increment's the computers random choice
-        cpuChoiceCounts[cpuChoice] += 1
+        # Create buttons with images and captions
+        self.create_button_with_caption("Bear", self.bear_image, self.button_frame, 0)
+        self.create_button_with_caption("Cowboy", self.cowboy_image, self.button_frame, 1)
+        self.create_button_with_caption("Ninja", self.ninja_image, self.button_frame, 2)
 
-        #Determines the winner
-        result = getWinner(userChoice, cpuChoice)
+        # Result and stats labels
+        self.result_label = tk.Label(self.root, text="", font=("Helvetica", 16), bg="#FFFFCC")
+        self.result_label.pack(pady=20)
 
-        if result == "Congrats! You win!":
-            userScore += 1 #Updating score for user win
-        elif result == "CPU wins!":
-            computerScore += 1 #Updating score for CPU win
+        self.stats_label = tk.Label(self.root, text="", font=("Helvetica", 16), bg="#FFFFCC")
+        self.stats_label.pack(pady=20)
+
+    def create_button_with_caption(self, caption, image, frame, column):
+        """
+        Create a button with a caption and place it in the specified frame.
+        :param caption: The text caption for the button.
+        :param image: The image to display on the button.
+        :param frame: The frame in which to place the button.
+        :param column: The column position for the button.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        # Create the caption label and place it in the frame
+        caption_label = tk.Label(frame, text=caption, font=("Helvetica", 14), bg="#FFFFCC")
+        caption_label.grid(row=0, column=column, padx=20, pady=10)
+
+        # Create the button with the image and place it in the frame
+        button = tk.Button(frame, image=image, command=lambda: self.choose_character(caption), borderwidth=2, relief="solid")
+        button.grid(row=1, column=column, padx=20, pady=10)
+
+    def choose_character(self, player_choice):
+        """
+        Handle the event when the player chooses a character.
+        :param player_choice: The character chosen by the player.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        # Choose a character for the opponent
+        opponent = self.opponent_choice()
+        
+        # Determine the result of the battle
+        result = self.battle(player_choice, opponent)
+        
+        # Update the result label
+        self.result_label.config(text=f"You chose: {player_choice}\nOpponent: {opponent}\n{result}")
+        
+        # Update game statistics
+        self.update_stats(result)
+
+    def opponent_choice(self):
+        """
+        Randomly choose a character for the opponent.
+        :return: The character chosen for the opponent.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        return random.choice(["Bear", "Cowboy", "Ninja"])
+
+    def battle(self, player, opponent):
+        """
+        Determine the result of the battle between the player's choice and the opponent's choice.
+        :param player: The character chosen by the player.
+        :param opponent: The character chosen by the opponent.
+        :return: The result of the battle.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        # Define the outcomes of the battles between characters
+        outcomes = {
+            ("Bear", "Cowboy"): "Bear wins! The Cowboy is no match for the Bear's strength.",
+            ("Bear", "Ninja"): "Ninja wins! The Bear is outmaneuvered by the Ninja's agility.",
+            ("Cowboy", "Bear"): "Cowboy wins! The Bear is outsmarted by the Cowboy's quick draw.",
+            ("Cowboy", "Ninja"): "Ninja wins! The Cowboy's gun skills can't keep up with the Ninja's speed.",
+            ("Ninja", "Bear"): "Ninja wins! The Bear is outmaneuvered by the Ninja's agility.",
+            ("Ninja", "Cowboy"): "Ninja wins! The Cowboy's gun skills can't keep up with the Ninja's speed.",
+        }
+
+        # Determine the result of the battle
+        if player == opponent:
+            result = f"It's a tie! Both {player}s are evenly matched."
+            self.update_stats("draw")
         else:
-            drawScore += 1 #Updating draw count for draws
+            result = outcomes.get((player, opponent), "It's a tie!")
+            if "wins" in result:
+                if player in result:
+                    self.update_stats("user wins")
+                else:
+                    self.update_stats("cpu wins")
+        
+        return result
 
-        #Output the counts of choices made by the user and cpu after round ends
-        print(f"\nYou chose: {userChoice}")
-        print(f"Computer chose: {cpuChoice}")
-        print(result)
-        print(f"Score Stats: - You: {userScore}, Computer: {computerScore}, Tie: {drawScore}")
-
-        end_game = False #end_game variable, to denote the end of the outer loop
-        while True: #Loop to handle new round, or game exit
-            play_again = input("\nDo you want to play again? (yes/no): ").lower()
-            if play_again.lower() == "no" or play_again.lower() == "n":
-                print("Thanks for playing!")
-                end_game = True
-                break #exit inner loop, end_game set to True, so it will trigger outer loop end also.  
-            elif play_again.lower() == "yes" or play_again.lower() == "y":
-                break #exit inner loop and play again
+    def update_stats(self, outcome=None):
+        """
+        Update the game statistics based on the outcome of the battle.
+        :param outcome: The outcome of the battle.
+        Time Complexity: O(1)
+        Space Complexity: O(1)
+        """
+        if outcome:
+            if "draw" in outcome.lower():
+                self.draws += 1
+            elif "user wins" in outcome:
+                self.user_wins += 1
             else:
-                print("\nInvalid input, try again") #Handle invalid input, stay in loop until fixed 
-        if end_game == True:
-            break #exit outer loop, end_game set to true.  
+                self.cpu_wins += 1
 
-    # Print counts of choices made by user and cpu at game end.  
-    print("\nChoice Counts:")
-    print("User:")
-    for choice, count in userChoiceCounts.items():
-        print(f"{choice}: {count}")
-        print("\nComputer:")
-    for choice, count in cpuChoiceCounts.items():
-            print(f"{choice}: {count}")
-    print("\nTotal:")
-    totalChoiceCounts = {choice: userChoiceCounts[choice] + cpuChoiceCounts[choice] for choice in choices}
-    for choice, count in totalChoiceCounts.items():
-        print(f"{choice}: {count}")
+        # Calculate total games played
+        total_games = self.user_wins + self.cpu_wins + self.draws
+        
+        # Calculate win percentages
+        user_win_percentage = (self.user_wins / total_games * 100) if total_games > 0 else 0
+        cpu_win_percentage = (self.cpu_wins / total_games * 100) if total_games > 0 else 0
+        draw_percentage = (self.draws / total_games * 100) if total_games > 0 else 0
 
-play() # Runs the game
+        # Update the statistics label
+        stats_text = (f"User Wins: {self.user_wins}\n"
+                      f"CPU Wins: {self.cpu_wins}\n"
+                      f"Draws: {self.draws}\n"
+                      f"User Win Percentage: {user_win_percentage:.2f}%\n"
+                      f"CPU Win Percentage: {cpu_win_percentage:.2f}%\n"
+                      f"Draw Percentage: {draw_percentage:.2f}%")
+        
+        self.stats_label.config(text=stats_text)
+
