@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bear Cowboy Ninja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🐻🤠🥷 Bear Cowboy Ninja</h1>
+
+        <div class="scoreboard">
+            <span class="score player">You: {{ player_score }}</span>
+            <span class="score cpu">CPU: {{ cpu_score }}</span>
+            <a href="/reset" class="reset-btn">Reset</a>
+        </div>
+
+        <form method="post" class="choices-grid">
+            {% for choice in choices %}
+                <button type="submit" name="choice" value="{{ choice }}" class="choice-card">
+                    <img src="{{ url_for('static', filename='images/' ~ choice ~ '.png') }}" alt="{{ choice }}">
+                    <p>{{ choice.capitalize() }}</p>
+                </button>
+            {% endfor %}
+        </form>
+
+        {% if user_choice %}
+            <div class="result-container">
+                <h2>You picked: <span class="highlight">{{ user_choice.capitalize() }}</span></h2>
+                <h2>CPU picked: <span class="highlight">{{ cpu_choice.capitalize() }}</span></h2>
+                <h3 class="result-message">{{ result }}</h3>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

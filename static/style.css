@@ -1,0 +1,115 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f2f4f8;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.game-container {
+    background: white;
+    max-width: 700px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 10px;
+}
+
+.score {
+    font-size: 1.2rem;
+    background: #e9ecef;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.player {
+    background: #d1e7dd;
+    color: #0f5132;
+        width: 150px;
+}
+
+.cpu {
+    background: #f8d7da;
+    color: #842029;
+        width: 150px;
+}
+
+.reset-btn {
+    background: #0d6efd;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+    width: 150px;
+}
+
+.reset-btn:hover {
+    background: #0b5ed7;
+
+}
+
+.choices-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.choice-card {
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.choice-card:hover {
+    transform: scale(1.08);
+}
+
+.choice-card img {
+    width: 120px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice-card p {
+    margin: 10px 0 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.result-container h2, .result-container h3 {
+    margin: 10px 0;
+}
+
+.highlight {
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.result-message {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
