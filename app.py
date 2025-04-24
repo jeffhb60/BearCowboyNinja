@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import random
 from game_logic import get_winner, choices
+from whitenoise import WhiteNoise
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Required to use sessions
-
+app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 @app.route("/", methods=["GET", "POST"])
 def index():
     user_choice = None
